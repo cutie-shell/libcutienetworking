@@ -3,6 +3,7 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
+#include <QDBusObjectPath>
 #include "../cutienetworking.h"
 
 class MobileNetworkPrivate : public QObject {
@@ -38,3 +39,9 @@ class MobileNetworkPrivate : public QObject {
     private:
 	MobileNetwork *q_ptr;
 };
+
+typedef QPair<QDBusObjectPath, QVariantMap> OfonoServicePair;
+typedef QList<OfonoServicePair> OfonoServiceList;
+
+Q_DECLARE_METATYPE(OfonoServicePair)
+Q_DECLARE_METATYPE(OfonoServiceList)

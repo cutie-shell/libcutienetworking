@@ -1,6 +1,5 @@
 #pragma once
 #include <QtQuick>
-#include <QDBusObjectPath>
 
 class MobileNetworkPrivate;
 class CutieNetworkConnectionPrivate;
@@ -49,12 +48,6 @@ class MobileNetwork : public QObject {
     private:
 	MobileNetworkPrivate *d_ptr;
 };
-
-typedef QPair<QDBusObjectPath, QVariantMap> OfonoServicePair;
-typedef QList<OfonoServicePair> OfonoServiceList;
-
-Q_DECLARE_METATYPE(OfonoServicePair)
-Q_DECLARE_METATYPE(OfonoServiceList)
 
 class CutieNetworkConnection : public QObject {
 	Q_OBJECT
