@@ -1,0 +1,2 @@
+module Cutie.Networking
+plugin qmlcutienetworkingplugin

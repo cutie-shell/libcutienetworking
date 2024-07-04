@@ -13,8 +13,20 @@ set(lib_SOURCES
     src/wifi/wifiaccesspoint.cpp
     src/wifi/wifisettings.cpp)
 
+set(plugin_SOURCES
+    src/plugin.cpp src/plugin.h)
+
 qt6_add_library(cutienetworking
     SHARED ${lib_SOURCES}
+)
+
+qt6_add_qml_module(qmlcutienetworkingplugin
+    URI Cutie.Networking
+    VERSION ${PROJECT_VERSION}
+    PLUGIN_TARGET qmlcutienetworkingplugin
+    NO_GENERATE_PLUGIN_SOURCE
+    SOURCES
+        ${plugin_SOURCES}
 )
 
 set_target_properties(cutienetworking PROPERTIES VERSION ${PROJECT_VERSION})
@@ -27,6 +39,12 @@ target_link_libraries(cutienetworking PUBLIC
     Qt::DBus
 )
 
+target_link_libraries(qmlcutienetworkingplugin PUBLIC
+    Qt::Core
+    Qt::Quick
+    cutienetworking
+)
+
 configure_file(src/cutienetworking.pc.in cutienetworking.pc @ONLY)
 
 install(TARGETS cutienetworking
@@ -36,3 +54,12 @@ install(TARGETS cutienetworking
     PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 
 install(FILES ${CMAKE_BINARY_DIR}/cutienetworking.pc DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+
+install(TARGETS qmlcutienetworkingplugin
+    RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Cutie/Networking"
+    BUNDLE DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Cutie/Networking"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Cutie/Networking"
+)
+
+install(DIRECTORY src/qml/Cutie/Networking DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Cutie")
+
